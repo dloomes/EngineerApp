@@ -335,6 +335,7 @@ export function AssetDetails(): JSX.Element {
             value={serial}
             onChange={(e) => setSerial(e.target.value)}
             placeholder="Enter serial number"
+            aria-label="Serial number"
             autoComplete="off"
             spellCheck={false}
           />

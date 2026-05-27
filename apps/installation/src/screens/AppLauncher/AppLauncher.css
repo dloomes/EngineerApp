@@ -4,6 +4,24 @@
   gap: 20px;
 }
 
+/* Brand band — the Involve logo is white (built for dark backgrounds), so it
+   sits on a brand-blue panel. The colourful ring mark reads on either. */
+.launcher__brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: #1F5C9E;
+  border-radius: 12px;
+}
+
+.launcher__logo {
+  height: 50px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
 .launcher__heading {
   margin: 0;
   font-size: 22px;
@@ -80,7 +98,8 @@
   padding: 2px 8px;
   font-size: 11px;
   font-weight: 600;
-  color: #6B7280;
+  /* Darkened from #6B7280 to clear 4.5:1 on the light badge (WCAG AA). */
+  color: #4B5563;
   background: #F3F4F6;
   border-radius: 999px;
   text-transform: uppercase;

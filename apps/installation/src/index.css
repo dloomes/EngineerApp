@@ -15,7 +15,10 @@ body,
 }
 
 body {
-  font-family: Arial, sans-serif;
+  /* System font stack — renders as the native OS typeface (San Francisco on
+     iOS, Segoe UI on Windows), which suits an installed PWA. */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: #1A1A1A;
@@ -40,4 +43,18 @@ button,
 [role='button'] {
   min-height: 44px;
   min-width: 44px;
+}
+
+/* Visible keyboard-focus ring across all interactive elements. Uses
+   :focus-visible so it only shows for keyboard/AT users, not mouse/touch. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #1F5C9E;
+  outline-offset: 2px;
+  border-radius: 4px;
 }

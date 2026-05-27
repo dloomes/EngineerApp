@@ -7,7 +7,7 @@ export interface WarningBannerProps {
 
 export function WarningBanner({ children }: WarningBannerProps): JSX.Element {
   return (
-    <div className="involve-warning-banner" role="note">
+    <div className="involve-warning-banner" role="note" aria-live="polite">
       <span className="involve-warning-banner__icon" aria-hidden="true">
         !
       </span>

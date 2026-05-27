@@ -20,10 +20,15 @@ export function Layout({
       <header className="involve-layout__header">
         <h1 className="involve-layout__title">{appName}</h1>
       </header>
-      {banner}
-      <main className="involve-layout__main">
-        <div className="involve-layout__main-inner">{children}</div>
-      </main>
+      {/* Content column: on desktop the layout is a row (sidebar + this
+          column), so the banner must live inside here to sit ABOVE the main
+          content rather than beside it. */}
+      <div className="involve-layout__content">
+        {banner}
+        <main className="involve-layout__main">
+          <div className="involve-layout__main-inner">{children}</div>
+        </main>
+      </div>
     </div>
   );
 }

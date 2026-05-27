@@ -32,6 +32,16 @@ const APPS: AppEntry[] = [
 export function AppLauncher(): JSX.Element {
   return (
     <section className="launcher">
+      <div className="launcher__brand">
+        <img
+          className="launcher__logo"
+          src="/involve-logo.png"
+          alt="Involve"
+          width={200}
+          height={50}
+        />
+      </div>
+
       <h2 className="launcher__heading">What task are you completing?</h2>
       <p className="launcher__subheading">Pick the app for the job you're on.</p>
 

@@ -123,7 +123,7 @@
 
 .confirmation__sync-button {
   flex-shrink: 0;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 12px;
   font-size: 13px;
   font-weight: 600;
@@ -154,7 +154,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 14px;
   font-size: 13px;
   font-weight: 600;
