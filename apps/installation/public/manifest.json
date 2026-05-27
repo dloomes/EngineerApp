@@ -1,6 +1,6 @@
 {
-  "name": "Installation App",
-  "short_name": "Installations",
+  "name": "Engineering",
+  "short_name": "Engineering",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

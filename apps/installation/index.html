@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#1F5C9E" />
     <link rel="manifest" href="/manifest.json" />
-    <title>Installation App</title>
+    <!-- iOS home-screen icon (iOS ignores the manifest icons). 180x180 PNG,
+         no transparency — iOS applies its own rounded corners. -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <!-- iOS home-screen shortcut label (falls back to <title> if absent). -->
+    <meta name="apple-mobile-web-app-title" content="Engineering" />
+    <title>Engineering</title>
   </head>
   <body>
     <div id="root"></div>
