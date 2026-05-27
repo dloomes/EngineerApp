@@ -1,5 +1,7 @@
+import type { ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from '@involve/ui';
+import { OfflineBanner } from '@/components/OfflineBanner';
 import { AppLauncher } from '@/screens/AppLauncher';
 import { ComingSoon } from '@/screens/ComingSoon';
 import { JobLookup } from '@/screens/JobLookup';
@@ -8,6 +10,22 @@ import { LocationStep } from '@/screens/LocationStep';
 import { AssetDetails } from '@/screens/AssetDetails';
 import { Confirmation } from '@/screens/Confirmation';
 
+// Wraps each screen in the shared layout with the app name + the offline/sync
+// banner, so connectivity status shows on every screen.
+function Shell({
+  appName,
+  children,
+}: {
+  appName: string;
+  children: ReactNode;
+}): JSX.Element {
+  return (
+    <Layout appName={appName} banner={<OfflineBanner />}>
+      {children}
+    </Layout>
+  );
+}
+
 export function App(): JSX.Element {
   return (
     <BrowserRouter>
@@ -15,65 +33,65 @@ export function App(): JSX.Element {
         <Route
           path="/"
           element={
-            <Layout appName="Engineer Apps">
+            <Shell appName="Engineer Apps">
               <AppLauncher />
-            </Layout>
+            </Shell>
           }
         />
         <Route
           path="/installation"
           element={
-            <Layout appName="Installation">
+            <Shell appName="Installation">
               <JobLookup />
-            </Layout>
+            </Shell>
           }
         />
         <Route
           path="/installation/lines"
           element={
-            <Layout appName="Installation">
+            <Shell appName="Installation">
               <OpportunityLines />
-            </Layout>
+            </Shell>
           }
         />
         <Route
           path="/installation/location"
           element={
-            <Layout appName="Installation">
+            <Shell appName="Installation">
               <LocationStep />
-            </Layout>
+            </Shell>
           }
         />
         <Route
           path="/installation/asset/:index"
           element={
-            <Layout appName="Installation">
+            <Shell appName="Installation">
               <AssetDetails />
-            </Layout>
+            </Shell>
           }
         />
         <Route
           path="/installation/confirmation"
           element={
-            <Layout appName="Installation">
+            <Shell appName="Installation">
               <Confirmation />
-            </Layout>
+            </Shell>
           }
         />
         <Route
           path="/health-check"
           element={
-            <Layout appName="Health Check">
+            <Shell appName="Health Check">
               <ComingSoon appName="Health Check" />
-            </Layout>
+            </Shell>
           }
         />
         <Route
           path="/fsr"
           element={
-            <Layout appName="FSR">
+            <Shell appName="FSR">
               <ComingSoon appName="FSR" />
-            </Layout>
+            </Shell>
           }
         />
       </Routes>

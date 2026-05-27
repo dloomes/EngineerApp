@@ -98,6 +98,46 @@
   color: #B91C1C;
 }
 
+.confirmation__badge--queued {
+  background: #FEF3C7;
+  color: #92670A;
+}
+
+/* Sync status strip shown while queued saves are still pending. */
+.confirmation__sync {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #FEF3C7;
+  border: 1px solid #FDE68A;
+  border-radius: 8px;
+}
+
+.confirmation__sync-text {
+  flex: 1;
+  font-size: 13px;
+  color: #92670A;
+  line-height: 1.4;
+}
+
+.confirmation__sync-button {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #92670A;
+  background: #FFFFFF;
+  border: 1px solid #FDE68A;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.confirmation__sync-button:hover {
+  background: #FFFBEB;
+}
+
 .confirmation__item-error {
   margin: 0;
   font-size: 13px;

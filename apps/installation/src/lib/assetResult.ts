@@ -19,6 +19,13 @@ export type AssetResult =
       product: DynamicsOpportunityProduct;
       input: CreateAssetInput;
       error: string;
+    }
+  | {
+      // Saved offline — parked in the IndexedDB queue and replayed on reconnect
+      // (see lib/offlineQueue.ts). No asset id yet.
+      status: 'queued';
+      product: DynamicsOpportunityProduct;
+      input: CreateAssetInput;
     };
 
 // Build the Dynamics web client URL for a Customer Asset record.

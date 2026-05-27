@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import type { DynamicsOpportunity } from '@involve/shared';
 import { ApiError } from '@/api/client';
 import { createAsset } from '@/api/assets';
+import { useOfflineQueue } from '@/hooks/useOfflineQueue';
+import { useOnlineStatus } from '@/hooks/useOnlineStatus';
 import { type AssetResult, dynamicsAssetUrl } from '@/lib/assetResult';
 import { customerName } from '@/lib/customer';
 import './Confirmation.css';
@@ -21,6 +23,12 @@ export function Confirmation(): JSX.Element {
   const [results, setResults] = useState<AssetResult[]>(initialResults);
   // Track which products are mid-retry, keyed by opportunityproductid.
   const [retrying, setRetrying] = useState<Set<string>>(new Set());
+
+  const online = useOnlineStatus();
+  const { pendingCount, flush } = useOfflineQueue();
+  // The offline queue only empties on a successful sync, so once it's drained
+  // (and we're online) we can treat this session's queued saves as synced.
+  const queuedSynced = online && pendingCount === 0;
 
   async function handleRetry(targetIndex: number): Promise<void> {
     const current = results[targetIndex];
@@ -72,17 +80,26 @@ export function Confirmation(): JSX.Element {
   }
 
   const created = results.filter((r) => r.status === 'created').length;
-  const failed = results.length - created;
+  const failed = results.filter((r) => r.status === 'failed').length;
+  const queued = results.filter((r) => r.status === 'queued').length;
+  // Once the queue has drained, queued saves count as saved.
+  const saved = created + (queuedSynced ? queued : 0);
+  const stillQueued = queuedSynced ? 0 : queued;
 
   const tone =
-    failed === 0 ? 'success' : created === 0 ? 'failed' : 'mixed';
+    failed > 0
+      ? saved === 0 && stillQueued === 0
+        ? 'failed'
+        : 'mixed'
+      : stillQueued > 0
+        ? 'mixed'
+        : 'success';
 
-  const heading =
-    failed === 0
-      ? `${created} ${created === 1 ? 'asset' : 'assets'} created`
-      : created === 0
-        ? `${failed} ${failed === 1 ? 'asset' : 'assets'} failed`
-        : `${created} created, ${failed} failed`;
+  const headingParts: string[] = [];
+  if (saved) headingParts.push(`${saved} saved`);
+  if (stillQueued) headingParts.push(`${stillQueued} queued`);
+  if (failed) headingParts.push(`${failed} failed`);
+  const heading = headingParts.join(' · ');
 
   return (
     <section className="confirmation">
@@ -93,10 +110,46 @@ export function Confirmation(): JSX.Element {
         {customerName(opportunity)} · {opportunity.name}
       </p>
 
+      {stillQueued > 0 && (
+        <div className="confirmation__sync" role="status">
+          <span className="confirmation__sync-text">
+            {online
+              ? `Syncing ${stillQueued} queued ${stillQueued === 1 ? 'asset' : 'assets'}…`
+              : `${stillQueued} ${stillQueued === 1 ? 'asset' : 'assets'} waiting to sync — will upload when you're back online.`}
+          </span>
+          {online && (
+            <button
+              type="button"
+              className="confirmation__sync-button"
+              onClick={() => void flush()}
+            >
+              Sync now
+            </button>
+          )}
+        </div>
+      )}
+
       <ul className="confirmation__list">
         {results.map((result, idx) => {
           const key = result.product.opportunityproductid;
           const isRetrying = retrying.has(key);
+
+          // Queued items render as synced once the queue has drained.
+          const showAsSynced = result.status === 'queued' && queuedSynced;
+          const badgeKind =
+            result.status === 'failed'
+              ? 'failed'
+              : result.status === 'created' || showAsSynced
+                ? 'created'
+                : 'queued';
+          const badgeLabel =
+            result.status === 'created'
+              ? 'Created'
+              : result.status === 'failed'
+                ? 'Failed'
+                : showAsSynced
+                  ? 'Synced'
+                  : 'Queued';
 
           return (
             <li
@@ -110,7 +163,7 @@ export function Confirmation(): JSX.Element {
                   <span className="confirmation__item-name">
                     {result.product.productname}
                   </span>
-                  {result.status === 'created' &&
+                  {result.status !== 'failed' &&
                     result.input.serialNumber &&
                     result.input.serialNumber !== 'N/A' && (
                       <span className="confirmation__item-sub">
@@ -119,11 +172,9 @@ export function Confirmation(): JSX.Element {
                     )}
                 </div>
                 <span
-                  className={`confirmation__badge confirmation__badge--${
-                    result.status === 'created' ? 'created' : 'failed'
-                  }`}
+                  className={`confirmation__badge confirmation__badge--${badgeKind}`}
                 >
-                  {result.status === 'created' ? 'Created' : 'Failed'}
+                  {badgeLabel}
                 </span>
               </div>
 
@@ -141,6 +192,12 @@ export function Confirmation(): JSX.Element {
                     </button>
                   </div>
                 </>
+              )}
+
+              {result.status === 'queued' && !showAsSynced && (
+                <p className="confirmation__item-sub">
+                  Saved offline — will sync automatically.
+                </p>
               )}
 
               {result.status === 'created' && (

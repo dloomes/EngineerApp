@@ -9,6 +9,7 @@ import type {
 import { SegmentedControl } from '@involve/ui';
 import { ApiError } from '@/api/client';
 import { type CreateAssetInput, createAsset } from '@/api/assets';
+import { enqueueAsset } from '@/lib/offlineQueue';
 import type { AssetResult } from '@/lib/assetResult';
 import { customerName } from '@/lib/customer';
 import './AssetDetails.css';
@@ -165,8 +166,22 @@ export function AssetDetails(): JSX.Element {
     return { position, total: sameLine.length };
   }
 
+  async function queueAndAdvance(input: CreateAssetInput): Promise<void> {
+    if (!product) return;
+    await enqueueAsset(input);
+    advance([...results, { status: 'queued', product, input }]);
+  }
+
   async function attemptSave(input: CreateAssetInput): Promise<void> {
     if (!product || saving) return;
+
+    // Offline: don't bother hitting the network — queue and move on so the
+    // engineer keeps working. The queue replays on reconnect.
+    if (!navigator.onLine) {
+      await queueAndAdvance(input);
+      return;
+    }
+
     setSaving(true);
     setLastError(null);
     try {
@@ -179,11 +194,14 @@ export function AssetDetails(): JSX.Element {
       };
       advance([...results, result]);
     } catch (err) {
-      const message =
-        err instanceof ApiError
-          ? `API error (${err.status}).`
-          : 'Save failed.';
-      setLastError({ message, input });
+      if (err instanceof ApiError) {
+        // Server was reached and rejected the save — a real error the engineer
+        // should see (Try again / Skip).
+        setLastError({ message: `API error (${err.status}).`, input });
+      } else {
+        // Network dropped mid-save — treat like offline and queue it.
+        await queueAndAdvance(input);
+      }
     } finally {
       setSaving(false);
     }
