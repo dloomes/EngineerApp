@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from '@involve/ui';
+import { IosInstallPrompt } from '@/components/IosInstallPrompt';
 import { OfflineBanner } from '@/components/OfflineBanner';
 import { AppLauncher } from '@/screens/AppLauncher';
 import { ComingSoon } from '@/screens/ComingSoon';
@@ -95,6 +96,8 @@ export function App(): JSX.Element {
           }
         />
       </Routes>
+      {/* App-wide, single instance — persists across navigation. */}
+      <IosInstallPrompt />
     </BrowserRouter>
   );
 }
