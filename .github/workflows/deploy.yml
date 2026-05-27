@@ -46,9 +46,16 @@ jobs:
       # Isolated production install so the deployed package carries only
       # @azure/functions (the sole runtime dep; @involve/* are type-only and
       # erased at build time).
+      #
+      # `npm install --omit=dev` still resolves the FULL tree (incl. dev) before
+      # pruning, so it would try to fetch the workspace-only @involve/* devDeps
+      # from the public registry and 404. We strip devDependencies first — the
+      # build that needed them has already run by this point.
       - name: Install proxy production deps
-        run: npm install --omit=dev --no-workspaces
         working-directory: api/dynamics
+        run: |
+          npm pkg delete devDependencies
+          npm install --omit=dev --no-workspaces --no-package-lock --ignore-scripts
 
       - name: Deploy proxy
         uses: Azure/functions-action@v1
