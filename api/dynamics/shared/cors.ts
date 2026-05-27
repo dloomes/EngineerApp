@@ -1,30 +1,16 @@
-import { getEnv } from './env';
-
-let cachedAllowlist: string[] | null = null;
-
-function getAllowedOrigins(): string[] {
-  if (cachedAllowlist) return cachedAllowlist;
-  cachedAllowlist = getEnv()
-    .ALLOWED_ORIGINS.split(',')
-    .map((s) => s.trim())
-    .filter(Boolean);
-  return cachedAllowlist;
-}
-
-export function buildCorsHeaders(origin: string | null): Record<string, string> {
-  const headers: Record<string, string> = {
-    Vary: 'Origin',
-    'Access-Control-Allow-Methods': 'GET, POST, PATCH, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Max-Age': '86400',
-  };
-
-  if (origin && getAllowedOrigins().includes(origin)) {
-    headers['Access-Control-Allow-Origin'] = origin;
-  }
-  return headers;
+// CORS is handled by the Azure Functions HOST, not by application code:
+//   - Deployed: the Function App's platform CORS "Allowed Origins" list
+//     (Portal -> Function App -> API -> CORS).
+//   - Local dev: the Host.CORS value in local.settings.json.
+//
+// The host's CORS layer runs before the function and owns the preflight
+// (OPTIONS) response; it cannot be disabled. If the app ALSO emitted CORS
+// headers we'd get duplicate Access-Control-Allow-Origin values, which
+// browsers reject. So we deliberately emit none here and let the host do it.
+export function buildCorsHeaders(_origin: string | null): Record<string, string> {
+  return {};
 }
 
 export function __resetCorsCacheForTests(): void {
-  cachedAllowlist = null;
+  // No-op: CORS is no longer handled in application code (see above).
 }
