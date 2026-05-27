@@ -75,7 +75,7 @@ jobs:
       - name: Deploy proxy
         uses: Azure/functions-action@v1
         with:
-          app-name: involve-engineerapp-api
+          app-name: involve-engineering-api
           package: api/dynamics
           respect-funcignore: true
           scm-do-build-during-deployment: false
