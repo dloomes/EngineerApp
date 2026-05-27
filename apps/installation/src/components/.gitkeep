@@ -1,0 +1,2 @@
+# App-specific components only. Shared UI (Layout, LookupPanel, SegmentedControl,
+# Scanner, WarningBanner) lives in @involve/ui per SUITE.md section 6.

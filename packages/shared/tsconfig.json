@@ -1,0 +1,10 @@
+{
+  "extends": "@involve/config/tsconfig.node.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "noEmit": false,
+    "declaration": true
+  },
+  "include": ["src"]
+}

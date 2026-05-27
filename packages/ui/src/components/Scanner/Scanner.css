@@ -1,0 +1,100 @@
+/* Full-screen camera overlay. Sits above everything else (LookupPanel uses z-index ~100). */
+
+.involve-scanner {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  animation: involve-scanner-fade 150ms ease-out;
+}
+
+@keyframes involve-scanner-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.involve-scanner__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  padding-top: max(16px, env(safe-area-inset-top));
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.involve-scanner__title {
+  flex: 1;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.involve-scanner__cancel {
+  min-height: 44px;
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.involve-scanner__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000000;
+}
+
+/* Viewfinder cut-out — purely visual; zxing scans the whole frame. */
+.involve-scanner__viewfinder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(80vw, 320px);
+  height: min(80vw, 320px);
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.involve-scanner__status {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 16px;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  text-align: center;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+  color: #FFFFFF;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.involve-scanner__error {
+  display: inline-block;
+  max-width: 420px;
+  padding: 12px 16px;
+  background: rgba(185, 28, 28, 0.95);
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 1.4;
+}

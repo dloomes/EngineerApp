@@ -1,0 +1,31 @@
+.involve-segmented {
+  display: inline-flex;
+  width: 100%;
+  background: #F3F4F6;
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.involve-segmented__option {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1A1A1A;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.involve-segmented__option:hover:not(.involve-segmented__option--active) {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.involve-segmented__option--active {
+  background: #FFFFFF;
+  color: #1F5C9E;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}

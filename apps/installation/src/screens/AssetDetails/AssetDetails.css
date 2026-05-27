@@ -1,0 +1,470 @@
+.asset {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* Make space for the sticky footer + iOS bottom inset. */
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+}
+
+/* Only used by the "No job loaded" / "Pick location first" fallbacks. */
+.asset__heading {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.asset__progress {
+  font-size: 13px;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Single-line context strip — customer · site · room with Change.
+   Truncates from the left when the line overflows so the room (most
+   specific) stays visible on narrow screens. */
+.asset__context {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 8px 8px 14px;
+  background: #F3F6FA;
+  border: 1px solid #E1E8F0;
+  border-radius: 8px;
+  min-height: 44px;
+}
+
+.asset__context-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  color: #1A1A1A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.asset__context-change {
+  flex-shrink: 0;
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1F5C9E;
+  background: transparent;
+  border: 1px solid #B5D0EC;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.asset__context-change:hover {
+  background: #1F5C9E;
+  color: #FFFFFF;
+  border-color: #1F5C9E;
+}
+
+/* Hero product card — the visual focus of the page. Engineers verify
+   they have the right unit in hand by reading this. */
+.asset__product {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  background: #FFFFFF;
+  border: 2px solid #1F5C9E;
+  border-radius: 10px;
+}
+
+/* Manufacturer left, optional "unit X of Y" badge right. */
+.asset__product-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.asset__product-manufacturer {
+  font-size: 16px;
+  font-weight: 600;
+  color: #6B7280;
+  line-height: 1.2;
+}
+
+.asset__product-slot {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1F5C9E;
+  background: #E8F0FA;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.asset__product-model {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1A1A1A;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.asset__product-name {
+  font-size: 13px;
+  color: #6B7280;
+  margin-top: 6px;
+}
+
+/* Generic field group shared by date + serial */
+.asset__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.asset__field-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.asset__date-input,
+.asset__serial-input {
+  height: 48px;
+  padding: 0 12px;
+  font-size: 16px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #1A1A1A;
+}
+
+.asset__date-input:focus,
+.asset__serial-input:focus {
+  outline: 2px solid #1F5C9E;
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+/* Scan mode: hint / scanned-value display + Open scanner button */
+.asset__scan {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.asset__scan-hint {
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #6B7280;
+  background: #F9FAFB;
+  border: 1px dashed #E5E7EB;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.asset__scan-value {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  background: #E8F5EA;
+  border: 1px solid #B5D8B8;
+  border-radius: 8px;
+}
+
+.asset__scan-value-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2D7D3A;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.asset__scan-value-text {
+  font-size: 16px;
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  color: #1A1A1A;
+  word-break: break-all;
+}
+
+.asset__scan-button {
+  height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1F5C9E;
+  background: #FFFFFF;
+  border: 1px solid #1F5C9E;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.asset__scan-button:hover {
+  background: #1F5C9E;
+  color: #FFFFFF;
+}
+
+/* Collapsed "+ Add …" entry points for optional field groups.
+   Shared by the Notes and Network details toggles so optional sections
+   read as a consistent affordance. */
+.asset__group-toggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1F5C9E;
+  background: #FFFFFF;
+  border: 1px dashed #B5D0EC;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.asset__group-toggle:hover {
+  background: #F0F6FC;
+  border-style: solid;
+}
+
+.asset__group-toggle-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Expanded group container — multiple related fields inside one panel.
+   Soft surface so it reads as a single chunk distinct from the required
+   fields above it. */
+.asset__group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 14px 14px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+}
+
+.asset__group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.asset__group-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1F5C9E;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.asset__group-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  color: #6B7280;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.asset__group-close:hover {
+  background: #E5E7EB;
+  color: #1A1A1A;
+}
+
+.asset__network-input {
+  height: 44px;
+  padding: 0 12px;
+  font-size: 16px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #1A1A1A;
+}
+
+.asset__network-input:focus {
+  outline: 2px solid #1F5C9E;
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+.asset__network-input--mono {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  letter-spacing: 0.5px;
+}
+
+/* Notes-specific header/close mirror the group block so the standalone
+   note field still has its own × control. */
+.asset__notes-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.asset__notes-close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  line-height: 1;
+  color: #6B7280;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.asset__notes-close:hover {
+  background: #F3F4F6;
+  color: #1A1A1A;
+}
+
+.asset__notes-input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  line-height: 1.4;
+  color: #1A1A1A;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  resize: vertical;
+  min-height: 88px;
+  box-sizing: border-box;
+}
+
+.asset__notes-input:focus {
+  outline: 2px solid #1F5C9E;
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+.asset__save-error {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #FEE2E2;
+  color: #B91C1C;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.asset__save-error-message {
+  margin: 0;
+}
+
+.asset__save-error-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.asset__try-again,
+.asset__skip {
+  flex: 1;
+  height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.asset__try-again {
+  background: #B91C1C;
+  color: #FFFFFF;
+}
+
+.asset__try-again:hover:not(:disabled) {
+  background: #991616;
+}
+
+.asset__try-again:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.asset__skip {
+  background: #FFFFFF;
+  color: #B91C1C;
+  border-color: #B91C1C;
+}
+
+.asset__skip:hover:not(:disabled) {
+  background: #FEE2E2;
+}
+
+.asset__skip:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.asset__placeholder {
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #6B7280;
+  background: #F9FAFB;
+  border: 1px dashed #E5E7EB;
+  border-radius: 8px;
+}
+
+/* Sticky footer (matches OpportunityLines pattern) */
+.asset__footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid #E5E7EB;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.asset__save {
+  width: 100%;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: #1F5C9E;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.asset__save:hover:not(:disabled) {
+  background: #174a80;
+}
+
+.asset__save:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+@media (min-width: 768px) {
+  .asset__footer {
+    position: sticky;
+    bottom: 0;
+    max-width: 480px;
+    margin: 0 auto;
+    background: rgba(249, 250, 251, 0.95);
+  }
+}

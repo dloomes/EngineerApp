@@ -1,0 +1,9 @@
+{
+  "extends": "@involve/config/tsconfig.node.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
+    "noEmit": false
+  },
+  "include": ["main.ts", "functions", "shared"]
+}

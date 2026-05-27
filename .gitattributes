@@ -1,0 +1,13 @@
+# Normalise line endings: LF in the repo, CRLF in the Windows working copy.
+# Keeps the Linux CI build and cross-platform diffs clean.
+* text=auto eol=lf
+
+# Binary assets — never normalise.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.woff binary
+*.woff2 binary

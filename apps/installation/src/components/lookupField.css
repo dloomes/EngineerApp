@@ -1,0 +1,72 @@
+/* Shared chrome for fields that open a LookupPanel
+   (SiteLookupField, RoomLookupField, …). */
+
+.lookup-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lookup-field__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.lookup-field__button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  color: #1A1A1A;
+}
+
+.lookup-field__button:hover:not(:disabled) {
+  border-color: #D6E4F3;
+}
+
+.lookup-field__button--selected {
+  border-color: #1F5C9E;
+}
+
+.lookup-field__button:disabled {
+  background: #F9FAFB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.lookup-field__value {
+  flex: 1;
+}
+
+.lookup-field__placeholder {
+  color: #6B7280;
+}
+
+.lookup-field__button:disabled .lookup-field__placeholder {
+  color: #9CA3AF;
+}
+
+.lookup-field__chevron {
+  color: #6B7280;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.lookup-field__button:disabled .lookup-field__chevron {
+  color: #9CA3AF;
+}
+
+.lookup-field__error {
+  margin: 0;
+  font-size: 13px;
+  color: #B91C1C;
+}

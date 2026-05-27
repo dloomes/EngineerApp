@@ -1,0 +1,147 @@
+.joblookup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.joblookup__back-link {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 10px 0 0;
+  margin-bottom: -8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1F5C9E;
+  text-decoration: none;
+}
+
+.joblookup__back-link:hover {
+  text-decoration: underline;
+}
+
+.joblookup__heading {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.joblookup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.joblookup__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.joblookup__input {
+  height: 48px;
+  padding: 0 12px;
+  font-size: 16px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #1A1A1A;
+}
+
+.joblookup__input:focus {
+  outline: 2px solid #1F5C9E;
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+.joblookup__input:disabled {
+  background: #F9FAFB;
+  color: #6B7280;
+}
+
+.joblookup__submit {
+  height: 48px;
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background: #1F5C9E;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.joblookup__submit:hover:not(:disabled) {
+  background: #174a80;
+}
+
+.joblookup__submit:disabled {
+  background: #9CA3AF;
+  cursor: not-allowed;
+}
+
+.joblookup__error {
+  margin: 0;
+  padding: 12px 16px;
+  background: #FEE2E2;
+  color: #B91C1C;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.joblookup__recent-heading {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.joblookup__recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.joblookup__recent-button {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  color: #1A1A1A;
+}
+
+.joblookup__recent-button:hover:not(:disabled) {
+  background: #F9FAFB;
+  border-color: #D6E4F3;
+}
+
+.joblookup__recent-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.joblookup__recent-ref {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1F5C9E;
+}
+
+.joblookup__recent-name {
+  font-size: 14px;
+  color: #6B7280;
+}

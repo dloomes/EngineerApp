@@ -1,0 +1,64 @@
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.coming-soon__back {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1F5C9E;
+  background: #FFFFFF;
+  border: 1px solid #1F5C9E;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.coming-soon__back:hover {
+  background: #1F5C9E;
+  color: #FFFFFF;
+}
+
+.coming-soon__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 32px 24px;
+  background: #F9FAFB;
+  border: 1px dashed #E1E8F0;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.coming-soon__badge {
+  align-self: center;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1F5C9E;
+  background: #E8F0FA;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.coming-soon__heading {
+  margin: 6px 0 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.coming-soon__body {
+  margin: 0;
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.5;
+  max-width: 36ch;
+  margin-inline: auto;
+}

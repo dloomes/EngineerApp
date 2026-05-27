@@ -1,0 +1,7 @@
+*.ts
+tsconfig.json
+.git*
+.vscode
+local.settings.json
+test
+node_modules/@types

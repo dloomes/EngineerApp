@@ -1,0 +1,30 @@
+{
+  "name": "@involve/installation",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Installation PWA — field engineers convert installed products into Customer Asset records in Dynamics 365.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist .turbo"
+  },
+  "dependencies": {
+    "@involve/shared": "*",
+    "@involve/ui": "*",
+    "@zxing/browser": "^0.1.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0"
+  },
+  "devDependencies": {
+    "@involve/config": "*",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.2.0"
+  }
+}
