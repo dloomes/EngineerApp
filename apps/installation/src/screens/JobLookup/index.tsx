@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ApiError } from '@/api/client';
 import { getJob } from '@/api/jobs';
 import { customerName } from '@/lib/customer';
+import { prefetchLocationData } from '@/lib/prefetch';
 import {
   getRecentJobs,
   recordRecentJob,
@@ -33,6 +34,9 @@ export function JobLookup(): JSX.Element {
       }
       // Recent-jobs label shows the customer name (matches the SPEC intent).
       setRecent(recordRecentJob(job.preact_involvereference, customerName(job)));
+      // Warm the offline cache for this account's sites + rooms while we still
+      // have signal, so the location step works if signal drops on site.
+      void prefetchLocationData(job._parentaccountid_value);
       navigate('/installation/lines', { state: { opportunity: job } });
     } catch (err) {
       const detail =

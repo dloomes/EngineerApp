@@ -1,5 +1,6 @@
 import type { DynamicsAccountSite } from '@involve/shared';
-import { USE_MOCK, apiFetch } from './client';
+import { ApiError, USE_MOCK, apiFetch } from './client';
+import { cacheGet, cacheSet } from '@/lib/apiCache';
 import { mockSites } from './mock/sites';
 
 export async function getSites(accountId: string): Promise<DynamicsAccountSite[]> {
@@ -9,9 +10,24 @@ export async function getSites(accountId: string): Promise<DynamicsAccountSite[]
       .slice()
       .sort((a, b) => a.involve_name.localeCompare(b.involve_name));
   }
-  return apiFetch<DynamicsAccountSite[]>(
-    `/accounts/${encodeURIComponent(accountId)}/sites`,
-  );
+  // Cache-through with offline fallback so the location step works without
+  // signal once the sites have loaded at least once.
+  const cacheKey = `sites:${accountId}`;
+  try {
+    const data = await apiFetch<DynamicsAccountSite[]>(
+      `/accounts/${encodeURIComponent(accountId)}/sites`,
+    );
+    cacheSet(cacheKey, data);
+    return data;
+  } catch (err) {
+    // A network failure (offline) isn't an ApiError — serve the cached copy.
+    // A genuine server error (ApiError) should surface, not be masked by stale data.
+    if (!(err instanceof ApiError)) {
+      const cached = cacheGet<DynamicsAccountSite[]>(cacheKey);
+      if (cached) return cached;
+    }
+    throw err;
+  }
 }
 
 export async function createSite(

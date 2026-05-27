@@ -1,5 +1,6 @@
 import type { DynamicsFunctionalLocation } from '@involve/shared';
-import { USE_MOCK, apiFetch } from './client';
+import { ApiError, USE_MOCK, apiFetch } from './client';
+import { cacheGet, cacheSet } from '@/lib/apiCache';
 import { mockRooms } from './mock/rooms';
 
 export async function getRooms(
@@ -11,9 +12,21 @@ export async function getRooms(
       .slice()
       .sort((a, b) => a.msdyn_name.localeCompare(b.msdyn_name));
   }
-  return apiFetch<DynamicsFunctionalLocation[]>(
-    `/sites/${encodeURIComponent(siteId)}/rooms`,
-  );
+  // Cache-through with offline fallback (see getSites for the rationale).
+  const cacheKey = `rooms:${siteId}`;
+  try {
+    const data = await apiFetch<DynamicsFunctionalLocation[]>(
+      `/sites/${encodeURIComponent(siteId)}/rooms`,
+    );
+    cacheSet(cacheKey, data);
+    return data;
+  } catch (err) {
+    if (!(err instanceof ApiError)) {
+      const cached = cacheGet<DynamicsFunctionalLocation[]>(cacheKey);
+      if (cached) return cached;
+    }
+    throw err;
+  }
 }
 
 export async function createRoom(
