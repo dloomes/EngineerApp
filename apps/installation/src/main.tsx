@@ -19,6 +19,22 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Warm the lazily-loaded scanner chunk (the ~400KB barcode library) so the
+// camera scanner works offline. Best-effort: online it downloads + the SW
+// caches it; offline it loads from the SW cache if already fetched. Either way
+// the module lands in memory so AssetDetails' lazy import resolves instantly.
+// We wait for the SW to be active so the fetch actually goes through the cache.
+function warmScannerChunk(): void {
+  void import('@involve/ui/scanner').catch(() => {
+    // Offline with no cached copy — the scanner just won't open; not fatal.
+  });
+}
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.ready.then(warmScannerChunk).catch(warmScannerChunk);
+} else {
+  warmScannerChunk();
+}
+
 // Replay any asset saves queued while offline — on reconnect and on app start.
 // (iOS Safari has no Background Sync API, so we drain the queue in-app.)
 window.addEventListener('online', () => {
