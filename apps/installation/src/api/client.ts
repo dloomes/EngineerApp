@@ -2,6 +2,8 @@
 // When VITE_USE_MOCK=true, the per-resource modules (jobs.ts, sites.ts, etc.)
 // short-circuit to fixtures and never reach apiFetch.
 
+import { getAccessToken } from '@/auth/getToken';
+
 export const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -27,6 +29,10 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
   if (init.body !== undefined && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
   }
+
+  // Attach the signed-in user's access token (no-op when auth is disabled).
+  const token = await getAccessToken();
+  if (token) headers.set('Authorization', `Bearer ${token}`);
 
   const res = await fetch(`${BASE_URL}${path}`, { ...init, headers });
 

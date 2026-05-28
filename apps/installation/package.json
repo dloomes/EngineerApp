@@ -12,6 +12,8 @@
     "clean": "rimraf dist .turbo"
   },
   "dependencies": {
+    "@azure/msal-browser": "^3.10.0",
+    "@azure/msal-react": "^2.0.12",
     "@involve/shared": "*",
     "@involve/ui": "*",
     "@zxing/browser": "^0.1.5",

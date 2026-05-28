@@ -13,7 +13,8 @@
     "clean": "rimraf dist .turbo"
   },
   "dependencies": {
-    "@azure/functions": "^4.5.0"
+    "@azure/functions": "^4.5.0",
+    "jose": "^5.9.0"
   },
   "devDependencies": {
     "@involve/config": "*",

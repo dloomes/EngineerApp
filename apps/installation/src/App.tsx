@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from '@involve/ui';
+import { RequireAuth } from '@/auth/RequireAuth';
 import { IosInstallPrompt } from '@/components/IosInstallPrompt';
 import { OfflineBanner } from '@/components/OfflineBanner';
 import { AppLauncher } from '@/screens/AppLauncher';
@@ -29,8 +30,9 @@ function Shell({
 
 export function App(): JSX.Element {
   return (
-    <BrowserRouter>
-      <Routes>
+    <RequireAuth>
+      <BrowserRouter>
+        <Routes>
         <Route
           path="/"
           element={
@@ -95,9 +97,10 @@ export function App(): JSX.Element {
             </Shell>
           }
         />
-      </Routes>
-      {/* App-wide, single instance — persists across navigation. */}
-      <IosInstallPrompt />
-    </BrowserRouter>
+        </Routes>
+        {/* App-wide, single instance — persists across navigation. */}
+        <IosInstallPrompt />
+      </BrowserRouter>
+    </RequireAuth>
   );
 }

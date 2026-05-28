@@ -1,14 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { MsalProvider } from '@azure/msal-react';
 import { App } from './App';
+import { authEnabled, msalInstance } from './auth/msalConfig';
 import { flushQueue } from './lib/offlineQueue';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+async function bootstrap(): Promise<void> {
+  // Initialise MSAL before render and pick up any redirect sign-in result.
+  if (authEnabled && msalInstance) {
+    await msalInstance.initialize();
+    const result = await msalInstance.handleRedirectPromise();
+    if (result?.account) {
+      msalInstance.setActiveAccount(result.account);
+    } else {
+      const [first] = msalInstance.getAllAccounts();
+      if (first) msalInstance.setActiveAccount(first);
+    }
+  }
+
+  const tree =
+    authEnabled && msalInstance ? (
+      <MsalProvider instance={msalInstance}>
+        <App />
+      </MsalProvider>
+    ) : (
+      <App />
+    );
+
+  ReactDOM.createRoot(document.getElementById('root')!).render(
+    <React.StrictMode>{tree}</React.StrictMode>,
+  );
+}
+
+void bootstrap();
 
 // Service worker registration (app-shell caching — see public/sw.js).
 if ('serviceWorker' in navigator) {

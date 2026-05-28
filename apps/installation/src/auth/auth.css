@@ -1,0 +1,51 @@
+.auth-splash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 24px;
+}
+
+.auth-splash__text {
+  margin: 0;
+  font-size: 15px;
+  color: #6B7280;
+  text-align: center;
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+}
+
+.user-menu__name {
+  font-size: 13px;
+  color: #1A1A1A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu__signout {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1F5C9E;
+  background: #FFFFFF;
+  border: 1px solid #1F5C9E;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.user-menu__signout:hover {
+  background: #1F5C9E;
+  color: #FFFFFF;
+}

@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { authEnabled } from '@/auth/msalConfig';
+import { UserMenu } from '@/auth/UserMenu';
 import './AppLauncher.css';
 
 interface AppEntry {
@@ -41,6 +43,8 @@ export function AppLauncher(): JSX.Element {
           height={50}
         />
       </div>
+
+      {authEnabled && <UserMenu />}
 
       <h2 className="launcher__heading">What task are you completing?</h2>
       <p className="launcher__subheading">Pick the app for the job you're on.</p>

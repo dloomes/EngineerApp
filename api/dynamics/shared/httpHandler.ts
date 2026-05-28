@@ -4,6 +4,7 @@ import type {
   HttpResponseInit,
   InvocationContext,
 } from '@azure/functions';
+import { isAuthorized } from './auth';
 import { buildCorsHeaders } from './cors';
 import { DynamicsError } from './dynamicsClient';
 
@@ -16,6 +17,15 @@ export function withCors(handler: HttpHandler): HttpHandler {
 
     if (req.method === 'OPTIONS') {
       return { status: 204, headers: corsHeaders };
+    }
+
+    // Require a valid Entra token (no-op when auth isn't configured).
+    if (!(await isAuthorized(req))) {
+      return {
+        status: 401,
+        headers: corsHeaders,
+        jsonBody: { error: 'Unauthorized' },
+      };
     }
 
     try {
